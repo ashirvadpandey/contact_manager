@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="(~{normal/base::layout(~{::section})})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+
+
+
+	<section>
+		<div class="card mr-3 ml-2 card-color">
+			<div class="card-body">
+				<h2 class="text-center" style="margin-top: -15px">Your Contacts</h2>
+				
+				<!--Search bar start  -->
+				<div class="search-container my-3">
+					<input onkeyup="search()" id="search-input" type="text" class="form-control" placeholder="Search your contacts" />
+					<div class="search-result">
+					<h2>This is result</h2>
+					<!-- Result goes here -->
+					
+					</div>
+				</div>
+				
+				<!--Search bar end  -->
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#ID</th>
+							<th scope="col">Name</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Email</th>
+							<!-- <th scope="col">Work</th> -->
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody >
+					
+						<tr id="data" th:each="c: ${contacts}">
+							<th scope="row" th:text="${c.cid}"></th>
+							<td>				
+							<a th:href="@{'/user/'+${c.cid}+'/contactDetail'}">			
+							<img class="profile_img" th:if="${c.imageUrl != null and c.imageUrl != ''}" th:src="@{'/img/' + ${c.imageUrl}}" >
+							
+							
+							<span class="profile_link" th:text="${c.firstName} +' '+ ${c.lastName}"></span></a></td> 
+							
+							<td>
+								<a th:href="@{'/user/'+${c.cid}+'/contactDetail'}">
+								<span class="profile_link"  th:text="${c.phone}"></span>
+								</a>
+							</td>
+							<td>
+							<a th:href="@{'/user/'+${c.cid}+'/contactDetail'}">
+							<span class="profile_link" th:text="${c.email}"></span>
+							</a>
+							</td>
+							<!-- <td th:text="${c.work}"></td> -->
+							<td>
+							<a href="#" th:onclick="|deleteContact(${c.cid})|" ><i class="fa fa-trash dlt"></i></a>	
+							<form th:action="@{'/user/'+${c.cid}+'/update-contact'}" method="post" style="margin-left: 10px; margin-top: -31px;">
+    							<button type="submit" class="btn btn-link" style="margin-left: 10px;"><i class="fa fa-pen-nib upt"></i></button>
+							</form>
+								
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<!-- Pagination Part -->
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination">
+				    <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/user/show-contacts/' + ${currentPage-1}}" href="#">Prev</a></li>
+				    <li th:classappend="${currentPage==pn-1?'active':''}" th:each="pn: ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/user/show-contacts/'+${pn-1}}" href="#"><span th:text="${pn}"></span></a></li>
+				    <li th:if="${currentPage+1 !=totalPages}" class="page-item"><a class="page-link" th:href="@{'/user/show-contacts/' + ${currentPage+1}}" href="#" >Next</a></li>
+				  </ul>
+				</nav>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

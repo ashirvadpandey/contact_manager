@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="(~{base::layout(~{::section})})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+
+
+
+
+	<section class="vh-100">
+		<div class="container-fluid h-custom">
+			<div
+				class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-md-9 col-lg-6 col-xl-5">
+					<img
+						src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+						class="img-fluid" alt="Sample image">
+				</div>
+				<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-5">
+
+					<form th:action="@{/send-otp}" method="post">
+						<!-- This section is for message  -->
+						<div th:if="${session.message}" class="container">
+							<div class="alert alert-danger my-2 text-center" role="alert">
+								<span th:text="${session.message}"></span>
+							</div>
+						</div>
+						<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+						
+						<!-- This section is for enter email for reset -->
+						<h2 class="text-center mb-4">Reset your password</h2>
+						<div class="form-outline mb-4">
+							<input type="email" id="form3Example3" name="email"
+								class="form-control form-control-lg"
+								placeholder="Enter a valid email address" required="required" />
+						</div>
+
+
+
+
+						<div class="text-center text-lg-start mt-4 pt-2">
+							<button type="submit" class="btn btn-warning">Send OTP</button>
+
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="(~{normal/base::layout(~{::section})})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+
+
+
+	<section>
+		<div class="card mr-3 ml-2 card-color" th:if="${oneContact}">
+			<div class="card-body">
+				<div class="container text-center">
+					<img class="profile_pic" th:if="${oneContact.imageUrl != null and oneContact.imageUrl != ''}" th:src="@{'/img/' + ${oneContact.imageUrl}}" >
+					<h3><span th:text="${oneContact.firstName}+' '+ ${oneContact.lastName}"></span></h3>
+					
+					<table class="table">
+					  <thead>
+					    <tr>
+					      <th scope="col">#ID</th>
+					      <th scope="col"><span th:text="${oneContact.cid}"></span></th>
+					      
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">Phone</th>
+					      <td th:text="${oneContact.phone}"></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">Email</th>
+					      <td th:text="${oneContact.email}"></td>
+					    </tr>
+					     <tr>
+					      <th scope="row">Work</th>
+					      <td th:text="${oneContact.work}"></td>
+					    </tr>
+					  </tbody>
+					</table>
+						<hr />
+						<h4>About</h4>
+						<div class="description">
+							<th:block th:text="${oneContact.description}"></th:block>
+						</div>
+					
+				</div>
+			</div>
+		</div>
+		<h1 class="text-center mt-4" th:unless="${oneContact}">You don't have permission to see this contact...</h1>
+		
+	</section>
+</body>
+</html>
